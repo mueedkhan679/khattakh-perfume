@@ -12,7 +12,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
@@ -256,7 +255,7 @@ textarea.inp{resize:vertical;min-height:105px}
   box-shadow:0 0 30px rgba(212,175,55,.15);
   box-sizing:border-box;
 }
-#sticker-qr{
+#qrcode-box{
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -268,8 +267,7 @@ textarea.inp{resize:vertical;min-height:105px}
   background:#fff;
   box-sizing:border-box;
 }
-#sticker-qr canvas{display:none!important}
-#sticker-qr img{display:block!important;width:120px!important;height:120px!important;max-width:none!important;object-fit:contain;image-rendering:pixelated}
+#qrcode-image{display:block;width:120px;height:120px;object-fit:contain;image-rendering:pixelated}
 .sticker-divider{width:56px;height:1px;background:#d4af37}
 .sticker-inner{
   width:100%;
@@ -758,7 +756,9 @@ textarea.inp{resize:vertical;min-height:105px}
             <div class="sticker-divider mt-3"></div>
           </div>
 
-          <div id="sticker-qr" aria-label="QR code linking to this perfume"></div>
+          <div id="qrcode-box" aria-label="QR code linking to this perfume">
+            <img id="qrcode-image" alt="QR code for this perfume" width="180" height="180">
+          </div>
 
           <div class="flex w-full flex-col items-center">
             <div class="sticker-divider mb-3 opacity-60"></div>
@@ -1265,6 +1265,47 @@ function showImagePreview(source){
   preview.src=source;
 }
 
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+
+    reader.onerror=()=>reject(reader.error||new Error('Could not read image file'));
+    reader.onload=()=>{
+      const image=new Image();
+      image.onerror=()=>reject(new Error('Could not decode image file'));
+      image.onload=()=>{
+        const maxDimension=400;
+        const scale=Math.min(1,maxDimension/Math.max(image.naturalWidth,image.naturalHeight));
+        const canvas=document.createElement('canvas');
+        canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));
+        canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
+
+        const context=canvas.getContext('2d');
+        if(!context){
+          reject(new Error('Could not prepare image compression'));
+          return;
+        }
+
+        context.fillStyle='#ffffff';
+        context.fillRect(0,0,canvas.width,canvas.height);
+        context.drawImage(image,0,0,canvas.width,canvas.height);
+
+        try{
+          resolve(canvas.toDataURL('image/jpeg',0.7));
+        }catch(error){
+          reject(error);
+        }finally{
+          canvas.width=0;
+          canvas.height=0;
+        }
+      };
+      image.src=String(reader.result||'');
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
 imageFileInput.addEventListener('change',event=>{
   const file=event.target.files?.[0];
   if(!file)return;
@@ -1282,29 +1323,24 @@ imageFileInput.addEventListener('change',event=>{
   }
 
   const token=++imageReadToken;
-  const reader=new FileReader();
-  document.getElementById('image-upload-status').textContent='Reading image…';
-  imageReadPromise=new Promise(resolve=>{
-    reader.onload=()=>{
-      const data=typeof reader.result==='string'?reader.result:'';
-      if(token===imageReadToken && data){
-        document.getElementById('f-image-data').value=data;
-        document.getElementById('image-upload-status').textContent=`${file.name} · ready to save`;
-        document.getElementById('clear-uploaded-image').classList.remove('hidden');
-        showImagePreview(data);
-      }
-      resolve(data||null);
-    };
-
-    reader.onerror=()=>{
-      if(token===imageReadToken){
-        document.getElementById('image-upload-status').textContent='Could not read the image. Try another file.';
-        toast('Could not read this image file. Please try again.','error');
-      }
-      resolve(null);
-    };
+  document.getElementById('image-upload-status').textContent='Compressing image…';
+  imageReadPromise=compressImage(file).then(data=>{
+    if(token===imageReadToken){
+      const compressedKB=Math.max(1,Math.round(data.length*0.75/1024));
+      document.getElementById('f-image-data').value=data;
+      document.getElementById('image-upload-status').textContent=`${file.name} · ${compressedKB} KB compressed`;
+      document.getElementById('clear-uploaded-image').classList.remove('hidden');
+      showImagePreview(data);
+    }
+    return data;
+  }).catch(error=>{
+    console.error('Could not compress uploaded image:',error);
+    if(token===imageReadToken){
+      document.getElementById('image-upload-status').textContent='Could not process the image. Try another file.';
+      toast('Could not process this image file. Please try another.','error');
+    }
+    return null;
   });
-  reader.readAsDataURL(file);
 });
 
 imageInput.addEventListener('input',debounce(()=>{
@@ -1491,11 +1527,6 @@ function openQR(id){
   const product=load().find(p=>p.id===id);
   if(!product)return;
 
-  if(typeof QRCode==='undefined'){
-    toast('QR library did not load. Please check your internet connection.','error');
-    return;
-  }
-
   const url=perfumeUrl(id);
   activeQRUrl=url;
 
@@ -1504,23 +1535,14 @@ function openQR(id){
   document.getElementById('sticker-size').textContent=`${product.size||'50ml'} · MUSA KHATTAK`;
   document.getElementById('qr-url-label').textContent=url;
 
-  const wrap=document.getElementById('sticker-qr');
-  wrap.innerHTML='';
-
-  try{
-    new QRCode(wrap,{
-      text:url,
-      width:120,
-      height:120,
-      colorDark:'#000000',
-      colorLight:'#ffffff',
-      correctLevel:QRCode.CorrectLevel.H
-    });
-  }catch(error){
-    console.error(error);
-    toast('QR generation failed. Check your website URL.','error');
-    return;
-  }
+  const qrImage=document.getElementById('qrcode-image');
+  qrImage.crossOrigin='anonymous';
+  qrImage.alt=`QR code for ${product.name||'this perfume'}`;
+  qrImage.onerror=()=>{
+    qrImage.removeAttribute('src');
+    toast('Could not load QR code. Check your internet connection and try again.','error');
+  };
+  qrImage.src=`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`;
 
   document.getElementById('copy-btn').innerHTML='<i class="fas fa-copy"></i> Copy URL';
   showModal('qr-modal');
@@ -1539,7 +1561,8 @@ async function downloadSticker(){
     return;
   }
 
-  if(!document.querySelector('#sticker-qr canvas,#sticker-qr img')){
+  const qrImage=document.getElementById('qrcode-image');
+  if(!qrImage.src){
     toast('QR code is not ready yet.','error');
     return;
   }
@@ -1551,13 +1574,13 @@ async function downloadSticker(){
       toast('Sticker container not found.','error');
       return;
     }
-    const qrImage=document.querySelector('#sticker-qr img');
-    if(qrImage && !qrImage.complete){
+    if(!qrImage.complete || !qrImage.naturalWidth){
       await new Promise((resolve,reject)=>{
         qrImage.addEventListener('load',resolve,{once:true});
         qrImage.addEventListener('error',()=>reject(new Error('QR image failed to load')),{once:true});
       });
     }
+    if(!qrImage.naturalWidth)throw new Error('QR image is unavailable');
 
     const canvas = await html2canvas(card,{
       backgroundColor: '#0a0a0a',
