@@ -245,12 +245,13 @@ textarea.inp{resize:vertical;min-height:105px}
 #admin-app thead{background:#f4f6f0}
 #admin-app th{color:#8a755f;white-space:nowrap;font-size:9px;letter-spacing:1.3px;text-transform:uppercase}
 #admin-app td{color:#52645a}
-#qr-sticker-card, #sticker-card{
+#qr-sticker-card{
   width:240px;
-  min-height:330px;
+  height:360px;
+  padding:15px;
   border:1.5px solid #d4af37;
-  border-radius:16px;
-  background-color:#0b0b0b;
+  border-radius:17px;
+  background:#0a0a0a;
   color:#f5eedc;
   box-shadow:0 0 30px rgba(212,175,55,.15);
   box-sizing:border-box;
@@ -259,11 +260,29 @@ textarea.inp{resize:vertical;min-height:105px}
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:8px;
-  border-radius:10px;
-  background:#ffffff;
+  width:142px;
+  height:142px;
+  padding:9px;
+  border:1px solid rgba(212,175,55,.35);
+  border-radius:13px;
+  background:#fff;
+  box-sizing:border-box;
 }
-#sticker-qr canvas,#sticker-qr img{width:120px!important;height:120px!important;display:block!important}
+#sticker-qr canvas{display:none!important}
+#sticker-qr img{display:block!important;width:120px!important;height:120px!important;max-width:none!important;object-fit:contain;image-rendering:pixelated}
+.sticker-divider{width:56px;height:1px;background:#d4af37}
+.sticker-inner{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 10px 12px;
+  border:1px solid rgba(212,175,55,.28);
+  border-radius:11px;
+  box-sizing:border-box;
+}
 .modal-backdrop{background:rgba(13,29,23,.62);backdrop-filter:blur(7px)}
 #toast{transition:opacity .25s,transform .25s}
 #toast.hidden{opacity:0;pointer-events:none;transform:translate(-50%,10px)}
@@ -563,7 +582,7 @@ textarea.inp{resize:vertical;min-height:105px}
                   </span>
                   <span class="min-w-0">
                     <span class="block text-xs font-bold text-[#315d4b]">Choose from gallery or device</span>
-                    <span id="image-upload-status" class="mt-1 block text-[10px] text-[#89958c]">JPG, PNG or WebP · up to 2 MB</span>
+                    <span id="image-upload-status" class="mt-1 block text-[10px] text-[#89958c]">JPG, PNG or WebP · up to 10 MB</span>
                   </span>
                   <i class="fas fa-arrow-up-from-bracket ml-auto text-xs text-[#a56e48]" aria-hidden="true"></i>
                 </label>
@@ -731,36 +750,22 @@ textarea.inp{resize:vertical;min-height:105px}
     <h3 class="mb-5 font-serif text-xl font-semibold text-[#315d4b]" id="qr-title">QR Sticker</h3>
 
     <div class="flex justify-center py-2">
-      <!-- Luxury Perfume Bottle Label Sticker Container -->
-      <div id="qr-sticker-card" class="relative flex flex-col items-center justify-between text-center w-[240px] min-h-[330px] p-3.5 bg-[#0b0b0b] border-[1.5px] border-[#D4AF37] rounded-2xl shadow-[0_0_30px_rgba(212,175,55,0.15)] select-none">
-        
-        <!-- Elegant Inner Hairline Border -->
-        <div class="w-full h-full flex flex-col items-center justify-between p-3 border border-[#D4AF37]/35 rounded-xl bg-gradient-to-b from-[#141414] via-[#0b0b0b] to-[#060606]">
-          
-          <!-- Top Header -->
-          <div class="flex flex-col items-center w-full pt-1">
-            <span class="text-[7.5px] uppercase tracking-[0.3em] text-[#D4AF37]/75 font-semibold mb-1 font-sans">Haute Parfumerie</span>
-            <h4 class="font-serif text-sm sm:text-[15px] font-bold uppercase tracking-[0.35em] text-[#D4AF37] leading-none">KHATTAK</h4>
-            <div class="w-16 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-2 opacity-85"></div>
+      <div id="qr-sticker-card" class="select-none text-center">
+        <div class="sticker-inner">
+          <div class="flex w-full flex-col items-center">
+            <h4 class="font-serif text-[18px] font-bold uppercase leading-none tracking-[0.34em] text-[#D4AF37]">KHATTAK</h4>
+            <p class="mt-2 font-sans text-[7px] font-medium uppercase tracking-[0.28em] text-[#c8b47d]">Haute Parfumerie</p>
+            <div class="sticker-divider mt-3"></div>
           </div>
 
-          <!-- QR Code Box (Crisp white padding for high scannability) -->
-          <div class="my-2 flex items-center justify-center">
-            <div id="sticker-qr" aria-label="QR code linking to this perfume"></div>
-          </div>
+          <div id="sticker-qr" aria-label="QR code linking to this perfume"></div>
 
-          <!-- Bottom Label -->
-          <div class="flex flex-col items-center w-full pb-1">
-            <div class="w-12 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-1.5"></div>
-            <p id="sticker-name" class="font-serif text-[15px] font-semibold text-[#f5eedc] max-w-full break-words leading-tight px-1"></p>
-            <p class="text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-medium mt-1">Scan to Explore</p>
-            <div class="mt-2 pt-1 border-t border-[#D4AF37]/20 w-4/5 flex justify-between items-center text-[7px] tracking-[0.2em] text-[#D4AF37]/60 uppercase font-sans">
-              <span>50ml</span>
-              <span>·</span>
-              <span>Musa Khattak</span>
-            </div>
+          <div class="flex w-full flex-col items-center">
+            <div class="sticker-divider mb-3 opacity-60"></div>
+            <p id="sticker-name" class="max-w-full break-words px-1 font-serif text-[17px] font-semibold leading-tight text-[#f5eedc]"></p>
+            <p class="mt-2 font-sans text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D4AF37]">Scan to Explore</p>
+            <p id="sticker-size" class="mt-3 border-t border-[#D4AF37]/25 pt-2 font-sans text-[7px] uppercase tracking-[0.2em] text-[#c8b47d]">50ML · MUSA KHATTAK</p>
           </div>
-
         </div>
       </div>
     </div>
@@ -1227,7 +1232,7 @@ function resetForm(){
   document.getElementById('save-btn-lbl').textContent='Save Perfume';
   document.getElementById('img-preview-wrap').classList.add('hidden');
   document.getElementById('img-preview-error').classList.add('hidden');
-  document.getElementById('image-upload-status').textContent='JPG, PNG or WebP · up to 2 MB';
+  document.getElementById('image-upload-status').textContent='JPG, PNG or WebP · up to 10 MB';
   document.getElementById('clear-uploaded-image').classList.add('hidden');
   editMode=false;
 }
@@ -1270,8 +1275,8 @@ imageFileInput.addEventListener('change',event=>{
     return;
   }
 
-  if(file.size>2*1024*1024){
-    toast('Please choose an image smaller than 2 MB.','error');
+  if(file.size>10*1024*1024){
+    toast('Please choose an image up to 10 MB.','error');
     event.target.value='';
     return;
   }
@@ -1313,7 +1318,7 @@ function clearUploadedImage(){
   imageReadPromise=Promise.resolve(null);
   document.getElementById('f-image-data').value='';
   imageFileInput.value='';
-  document.getElementById('image-upload-status').textContent='JPG, PNG or WebP · up to 2 MB';
+  document.getElementById('image-upload-status').textContent='JPG, PNG or WebP · up to 10 MB';
   document.getElementById('clear-uploaded-image').classList.add('hidden');
   showImagePreview(imageInput.value.trim());
 }
@@ -1420,7 +1425,7 @@ function startEdit(id){
   imageFileInput.value='';
   document.getElementById('image-upload-status').textContent=product.imageData
     ?'Saved device image · choose another to replace'
-    :'JPG, PNG or WebP · up to 2 MB';
+    :'JPG, PNG or WebP · up to 10 MB';
   document.getElementById('clear-uploaded-image').classList.toggle('hidden',!product.imageData);
   document.getElementById('f-top').value=arr(product.topNotes).join(', ');
   document.getElementById('f-mid').value=arr(product.middleNotes).join(', ');
@@ -1496,6 +1501,7 @@ function openQR(id){
 
   document.getElementById('qr-title').textContent=product.name;
   document.getElementById('sticker-name').textContent=product.name||'Untitled Perfume';
+  document.getElementById('sticker-size').textContent=`${product.size||'50ml'} · MUSA KHATTAK`;
   document.getElementById('qr-url-label').textContent=url;
 
   const wrap=document.getElementById('sticker-qr');
@@ -1540,14 +1546,21 @@ async function downloadSticker(){
 
   try{
     await document.fonts.ready;
-    const card = document.getElementById('qr-sticker-card') || document.getElementById('sticker-card');
+    const card = document.getElementById('qr-sticker-card');
     if(!card){
       toast('Sticker container not found.','error');
       return;
     }
+    const qrImage=document.querySelector('#sticker-qr img');
+    if(qrImage && !qrImage.complete){
+      await new Promise((resolve,reject)=>{
+        qrImage.addEventListener('load',resolve,{once:true});
+        qrImage.addEventListener('error',()=>reject(new Error('QR image failed to load')),{once:true});
+      });
+    }
 
     const canvas = await html2canvas(card,{
-      backgroundColor: null,
+      backgroundColor: '#0a0a0a',
       scale: 3,
       useCORS: true,
       logging: false
