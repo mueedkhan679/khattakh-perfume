@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f5f5ef">
+<title>Admin Portal | Khattak Perfumes</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        serif: ['Playfair Display','Georgia','serif'],
+        sans: ['Inter','system-ui','sans-serif']
+      }
+    }
+  }
+};
+</script>
+
+<style>
+:root{
+  --green:#234b3c;
+  --green2:#315f4c;
+  --green3:#17382e;
+  --gold:#b98252;
+  --gold2:#d7ad82;
+  --paper:#f5f5ef;
+  --white:#fffefa;
+  --ink:#1d382e;
+  --muted:#7d8980;
+  --line:rgba(35,75,60,.12);
+  --shadow:0 15px 45px rgba(28,57,45,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse at 5% 0%,rgba(185,130,82,.13),transparent 30rem),
+    radial-gradient(ellipse at 100% 35%,rgba(49,95,76,.09),transparent 32rem),
+    var(--paper);
+  color:var(--ink);
+  font-family:Inter,system-ui,sans-serif;
+  overflow-x:hidden;
+}
+button,input,textarea,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+::selection{background:var(--green);color:white}
+.font-serif{font-family:'Playfair Display',Georgia,serif}
+.gold-text{
+  background:linear-gradient(115deg,#173d32 0%,#47705b 52%,#a56e48 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.gold-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.glass{
+  background:rgba(255,255,252,.91);
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+}
+.header-blur{
+  background:rgba(248,248,242,.88);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 8px 30px rgba(24,55,47,.055);
+  backdrop-filter:blur(22px);
+}
+.inp{
+  width:100%;
+  min-height:46px;
+  padding:12px 14px;
+  border:1px solid rgba(35,75,60,.15);
+  border-radius:13px;
+  background:#fbfcf8;
+  color:var(--ink);
+  outline:none;
+  font-size:13px;
+  transition:.25s;
+}
+.inp:focus{
+  border-color:var(--gold);
+  background:white;
+  box-shadow:0 0 0 4px rgba(185,130,82,.12);
+}
+.inp::placeholder{color:#a0aaa2}
+.inp option{background:white;color:var(--ink)}
+textarea.inp{resize:vertical;min-height:105px}
+.lbl{
+  display:block;
+  margin-bottom:8px;
+  color:#98704f;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-weight:800;
+}
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border:0;
+  border-radius:13px;
+  padding:11px 17px;
+  background:linear-gradient(120deg,var(--green2),var(--green3));
+  color:white;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(24,61,50,.16);
+  transition:.25s;
+}
+.btn-primary:hover{
+  background:linear-gradient(120deg,var(--gold),#94613e);
+  transform:translateY(-2px);
+  box-shadow:0 12px 25px rgba(185,130,82,.22);
+}
+.btn-secondary,.btn-small{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:1px solid rgba(49,91,73,.20);
+  border-radius:12px;
+  background:rgba(255,255,255,.75);
+  color:var(--green);
+  cursor:pointer;
+  transition:.2s;
+}
+.btn-secondary{padding:10px 15px;font-size:12px;font-weight:600}
+.btn-small{padding:7px 10px;font-size:11px;font-weight:600}
+.btn-secondary:hover,.btn-small:hover{
+  background:#f6f0e8;
+  border-color:rgba(185,130,82,.5);
+  transform:translateY(-1px);
+}
+.btn-danger{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:1px solid rgba(220,38,38,.2);
+  border-radius:11px;
+  padding:8px 11px;
+  background:#fff5f4;
+  color:#c43c3c;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+.btn-danger:hover{background:#fee5e3;transform:translateY(-1px)}
+.stat-card{
+  position:relative;
+  min-height:135px;
+  overflow:hidden;
+  padding:20px;
+  border:1px solid rgba(35,75,60,.09);
+  border-radius:20px;
+  background:linear-gradient(145deg,#fffefa,#f7f8f2);
+  box-shadow:0 12px 30px rgba(24,55,47,.05);
+  transition:.28s;
+}
+.stat-card:after{
+  content:"";
+  position:absolute;
+  width:110px;height:110px;
+  right:-45px;bottom:-55px;
+  border-radius:50%;
+  background:rgba(185,130,82,.10);
+}
+.stat-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 38px rgba(24,55,47,.10);
+  border-color:rgba(185,130,82,.35);
+}
+.stat-icon{
+  display:grid;
+  place-items:center;
+  width:38px;height:38px;
+  border-radius:12px;
+  background:#edf2eb;
+  color:var(--gold);
+  font-size:15px;
+}
+.stat-number{
+  margin-top:14px;
+  font-family:'Playfair Display',serif;
+  font-size:30px;
+  font-weight:700;
+  line-height:1;
+  color:var(--green);
+}
+.stat-label{
+  margin-top:7px;
+  color:#8b968d;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  border:1px solid rgba(49,91,73,.13);
+  border-radius:100px;
+  padding:5px 9px;
+  background:#edf3eb;
+  color:#42644f;
+  font-size:9px;
+  font-weight:700;
+}
+.inv-row{border-bottom:1px solid rgba(24,55,47,.075);transition:background .2s}
+.inv-row:hover{background:rgba(69,112,88,.045)}
+.inv-row:last-child{border-bottom:0}
+.form-panel{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:max-height .5s ease,opacity .35s ease;
+}
+.form-panel.open{max-height:4000px;opacity:1}
+.fade-in{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+.pop-in{animation:pop .3s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(17px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes loginIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.login-in{animation:loginIn .55s ease both}
+.gold-border{border:1px solid rgba(185,130,82,.25)}
+#admin-app main{padding-bottom:80px}
+#admin-app table{border-collapse:collapse}
+#admin-app thead{background:#f4f6f0}
+#admin-app th{color:#8a755f;white-space:nowrap;font-size:9px;letter-spacing:1.3px;text-transform:uppercase}
+#admin-app td{color:#52645a}
+#qr-sticker-card, #sticker-card{
+  width:240px;
+  min-height:330px;
+  border:1.5px solid #d4af37;
+  border-radius:16px;
+  background-color:#0b0b0b;
+  color:#f5eedc;
+  box-shadow:0 0 30px rgba(212,175,55,.15);
+  box-sizing:border-box;
+}
+#sticker-qr{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  border-radius:10px;
+  background:#ffffff;
+}
+#sticker-qr canvas,#sticker-qr img{width:120px!important;height:120px!important;display:block!important}
+.modal-backdrop{background:rgba(13,29,23,.62);backdrop-filter:blur(7px)}
+#toast{transition:opacity .25s,transform .25s}
+#toast.hidden{opacity:0;pointer-events:none;transform:translate(-50%,10px)}
+.mobile-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:40;
+  display:none;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,255,250,.94);
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(20px);
+}
+.mobile-nav a,.mobile-nav button{
+  display:flex;flex:1;flex-direction:column;align-items:center;gap:4px;
+  border:0;background:none;color:#7d8980;font-size:9px;font-weight:700;
+}
+.mobile-nav i{font-size:16px;color:var(--green)}
+.empty-icon{
+  width:68px;height:68px;display:grid;place-items:center;
+  margin:0 auto 17px;border-radius:22px;
+  background:#edf2eb;color:#a77953;font-size:26px;
+}
+.preview-image{width:100px;height:125px;object-fit:cover;border-radius:13px;border:1px solid var(--line)}
+@media(max-width:640px){
+  #admin-app main{padding:88px 14px 100px}
+  #admin-app main>.mb-8 h1{font-size:26px}
+  .stat-card{min-height:112px;padding:14px;border-radius:17px}
+  .stat-number{font-size:25px}
+  .glass{border-radius:18px}
+  .mobile-nav{display:flex}
+  #search-inp{width:100%}
+  #inventory-tools{width:100%;display:grid;grid-template-columns:1fr auto}
+  #form-panel .glass{padding:17px}
+  #perf-form .form-actions{display:grid;grid-template-columns:1fr 1fr}
+  #perf-form .form-actions button{width:100%}
+  #qr-modal,#del-modal{padding:12px}
+  #qr-modal .glass{padding:22px}
+  #toast{width:calc(100% - 28px);bottom:80px}
+}
+@media(max-width:380px){
+  .stat-card{padding:11px}
+  .stat-number{font-size:22px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+
+<body class="min-h-screen">
+
+<!-- LOGIN SCREEN -->
+<section id="login-overlay" class="fixed inset-0 z-[200] flex items-center justify-center px-5 py-8">
+  <div class="w-full max-w-md glass p-7 sm:p-9 login-in">
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center gold-border bg-[#edf2eb] shadow-sm">
+        <i class="fas fa-crown text-2xl" style="color:var(--gold)"></i>
+      </div>
+      <p class="text-[9px] tracking-[.45em] uppercase font-bold text-[#9a795e] mb-2">KHATTAK PERFUMES</p>
+      <h1 class="font-serif text-3xl font-bold gold-text">Admin Portal</h1>
+      <p class="text-xs text-[#8b968d] mt-2">Manage your fragrance collection</p>
+      <div class="gold-line w-20 mx-auto mt-5"></div>
+    </div>
+
+    <form onsubmit="event.preventDefault();doLogin()" class="space-y-5">
+      <div>
+        <label class="lbl">Admin Password</label>
+        <div class="relative">
+          <input type="password" id="admin-pwd" class="inp pr-12" placeholder="Enter your password" autocomplete="current-password">
+          <button type="button" onclick="togglePwdVis()" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#9a795e]" id="eye-btn" aria-label="Show password">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="login-err" class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600">
+        <i class="fas fa-circle-exclamation mr-2"></i>Incorrect password. Please try again.
+      </div>
+
+      <button type="submit" class="btn-primary w-full py-3.5">
+        <i class="fas fa-lock-open"></i> Access Admin Portal
+      </button>
+    </form>
+
+    <a href="index.html" class="block mt-6 text-center text-xs text-[#8b968d] hover:text-[#a56e48]">
+      <i class="fas fa-arrow-left mr-2"></i>Back to Public Catalogue
+    </a>
+
+    <p class="text-center text-[9px] text-[#a0aaa2] mt-8 tracking-widest">© 2026 KHATTAK PERFUMES</p>
+  </div>
+</section>
+
+
+<!-- ADMIN APPLICATION -->
+<div id="admin-app" class="hidden min-h-screen">
+
+  <!-- HEADER -->
+  <header class="header-blur fixed top-0 inset-x-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <a href="#" class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 shrink-0 rounded-xl bg-[#edf2eb] gold-border flex items-center justify-center">
+          <i class="fas fa-crown" style="color:var(--gold)"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="font-serif text-base sm:text-lg font-bold tracking-[.15em] gold-text">KHATTAK</div>
+          <div class="text-[9px] uppercase tracking-[.2em] text-[#89958c]">Admin Dashboard</div>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <a href="index.html" target="_blank" rel="noopener" class="btn-small hidden sm:inline-flex">
+          <i class="fas fa-arrow-up-right-from-square"></i> View Website
+        </a>
+        <button onclick="exportData()" class="btn-small hidden sm:inline-flex">
+          <i class="fas fa-download"></i> Backup
+        </button>
+        <label class="btn-small hidden sm:inline-flex cursor-pointer">
+          <i class="fas fa-upload"></i> Import
+          <input type="file" accept=".json,application/json" class="hidden" onchange="importData(event)">
+        </label>
+        <button onclick="doLogout()" class="btn-small !border-red-100 !text-red-500">
+          <i class="fas fa-right-from-bracket"></i><span class="hidden sm:inline">Logout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto px-5 pt-28">
+
+    <!-- WELCOME -->
+    <section class="mb-8 fade-in">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full bg-green-600"></span>
+            <span class="text-[9px] tracking-[.25em] uppercase font-bold text-[#8b968d]">Control Center</span>
+          </div>
+          <h1 class="font-serif text-3xl sm:text-4xl font-semibold gold-text">Welcome, Musa Khattak</h1>
+          <p class="text-sm text-[#89958c] mt-2">Manage your fragrance inventory and keep your collection up to date.</p>
+        </div>
+        <div class="text-right hidden md:block">
+          <p class="text-[9px] uppercase tracking-[.2em] text-[#9a795e] font-bold">Your workspace</p>
+          <p class="font-serif text-lg text-[#315d4b]">Khattak Perfumes</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- STATISTICS -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 fade-in">
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <div class="stat-icon"><i class="fas fa-spray-can-sparkles"></i></div>
+          <span class="pill">Inventory</span>
+        </div>
+        <div class="stat-number" id="stat-total">0</div>
+        <div class="stat-label">Total Perfumes</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <div class="stat-icon"><i class="fas fa-qrcode"></i></div>
+          <span class="pill">Ready</span>
+        </div>
+        <div class="stat-number">QR</div>
+        <div class="stat-label">QR Code Generator</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <div class="stat-icon"><i class="fas fa-flask"></i></div>
+          <span class="pill">Default</span>
+        </div>
+        <div class="stat-number">EDP</div>
+        <div class="stat-label">Fragrance Type</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="flex justify-between items-center">
+          <div class="stat-icon"><i class="fas fa-shield-halved"></i></div>
+          <span class="pill">Session</span>
+        </div>
+        <div class="stat-number"><i class="fas fa-check-circle text-2xl"></i></div>
+        <div class="stat-label">Admin Access</div>
+      </div>
+    </section>
+
+
+    <!-- QR SETTINGS -->
+    <section class="glass p-5 sm:p-6 mb-8 fade-in">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="stat-icon"><i class="fas fa-qrcode"></i></div>
+        <div>
+          <h2 class="font-serif text-lg font-semibold text-[#315d4b]">QR Code Settings</h2>
+          <p class="text-[10px] text-[#89958c]">Choose the website address used by product QR codes.</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-end gap-3">
+        <div class="flex-1 w-full">
+          <label class="lbl">Base Website URL</label>
+          <input type="url" id="base-url-inp" class="inp" placeholder="https://yourdomain.com">
+          <p class="text-[10px] text-[#9aa39b] mt-2">QR links will open your website with the selected perfume ID.</p>
+        </div>
+        <button onclick="saveBaseUrl()" class="btn-secondary w-full sm:w-auto">
+          <i class="fas fa-floppy-disk"></i> Save URL
+        </button>
+      </div>
+    </section>
+
+
+    <!-- INVENTORY HEADER -->
+    <section class="flex flex-wrap items-center justify-between gap-4 mb-5 fade-in">
+      <div>
+        <p class="text-[9px] uppercase tracking-[.25em] text-[#9a795e] font-bold mb-1">Your collection</p>
+        <h2 class="font-serif text-2xl font-semibold gold-text">Perfume Inventory</h2>
+        <p class="text-xs text-[#89958c] mt-1">Add, edit, manage and share your fragrances.</p>
+      </div>
+
+      <button onclick="toggleForm()" id="form-toggle-btn" class="btn-primary">
+        <i class="fas fa-plus text-xs" id="form-toggle-icon"></i>
+        <span id="form-toggle-txt">Add New Perfume</span>
+      </button>
+    </section>
+
+
+    <!-- ADD / EDIT FORM -->
+    <section class="form-panel mb-7" id="form-panel">
+      <div class="glass p-5 sm:p-7">
+        <div class="flex items-center justify-between gap-3 mb-6">
+          <div>
+            <p class="text-[9px] uppercase tracking-[.25em] text-[#9a795e] font-bold mb-1">Product information</p>
+            <h3 class="font-serif text-xl font-semibold gold-text" id="form-heading">Add New Perfume</h3>
+          </div>
+          <button type="button" onclick="resetForm()" class="btn-small">
+            <i class="fas fa-rotate-left"></i> Reset
+          </button>
+        </div>
+
+        <form id="perf-form" onsubmit="savePerfume(event)" novalidate>
+          <input type="hidden" id="f-id">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-5">
+            <div>
+              <label class="lbl">Perfume Name *</label>
+              <input type="text" id="f-name" class="inp" placeholder="e.g. 22 December" required>
+            </div>
+
+            <div>
+              <label class="lbl">Size / Volume</label>
+              <input type="text" id="f-size" class="inp" placeholder="e.g. 50ml, 100ml">
+            </div>
+
+            <div>
+              <label class="lbl">Price</label>
+              <input type="text" id="f-price" class="inp" placeholder="e.g. Rs. 5,500">
+            </div>
+
+            <div>
+              <label class="lbl">Gender</label>
+              <select id="f-gender" class="inp">
+                <option value="">Select Target</option>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Unisex">Unisex</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="lbl">Concentration</label>
+              <input type="text" id="f-conc" class="inp" placeholder="e.g. 20% Eau De Parfum">
+            </div>
+
+            <div>
+              <label class="lbl">Sillage / Projection</label>
+              <select id="f-sillage" class="inp">
+                <option value="">Select Sillage</option>
+                <option value="Intimate">Intimate</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Strong">Strong</option>
+                <option value="Very Strong">Very Strong</option>
+                <option value="Enormous">Enormous</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="lbl">Longevity</label>
+              <input type="text" id="f-long" class="inp" placeholder="e.g. 48 Hours, 24+ Hours">
+            </div>
+
+              <div class="sm:col-span-2">
+                <label class="lbl" for="f-image-file">Product Image</label>
+                <label for="f-image-file" class="flex min-h-[92px] cursor-pointer items-center gap-4 rounded-2xl border border-dashed border-[#b98252]/40 bg-[#fbfcf8] px-4 py-4 transition hover:border-[#b98252] hover:bg-white">
+                  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#edf2eb] text-[#a56e48]">
+                    <i class="fas fa-images text-lg" aria-hidden="true"></i>
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block text-xs font-bold text-[#315d4b]">Choose from gallery or device</span>
+                    <span id="image-upload-status" class="mt-1 block text-[10px] text-[#89958c]">JPG, PNG or WebP · up to 2 MB</span>
+                  </span>
+                  <i class="fas fa-arrow-up-from-bracket ml-auto text-xs text-[#a56e48]" aria-hidden="true"></i>
+                </label>
+                <input type="file" id="f-image-file" class="sr-only" accept="image/*">
+                <input type="hidden" id="f-image-data">
+                <button type="button" id="clear-uploaded-image" onclick="clearUploadedImage()" class="hidden mt-2 text-[10px] font-semibold text-red-500 hover:text-red-700">
+                  <i class="fas fa-trash-can mr-1"></i> Remove uploaded image
+                </button>
+                <div class="mt-4">
+                  <label class="lbl" for="f-img">Image URL <span class="normal-case tracking-normal font-medium text-[#a0aaa2]">(optional fallback)</span></label>
+                  <input type="url" id="f-img" class="inp" placeholder="https://example.com/perfume.jpg">
+                  <p class="text-[10px] text-[#9aa39b] mt-2">A selected device image takes priority. Use a URL if you prefer an externally hosted image.</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="lbl">Fragrance Description</label>
+            <textarea id="f-desc" class="inp" placeholder="Describe the fragrance, mood, occasion and character..."></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-5">
+            <div>
+              <label class="lbl">Top Notes</label>
+              <input type="text" id="f-top" class="inp" placeholder="Apple, Nutmeg, Cassis">
+              <p class="text-[10px] text-[#9aa39b] mt-2">Separate with commas.</p>
+            </div>
+
+            <div>
+              <label class="lbl">Heart / Middle Notes</label>
+              <input type="text" id="f-mid" class="inp" placeholder="Jasmine, Sandalwood">
+              <p class="text-[10px] text-[#9aa39b] mt-2">Separate with commas.</p>
+            </div>
+
+            <div>
+              <label class="lbl">Base Notes</label>
+              <input type="text" id="f-base" class="inp" placeholder="Coffee, Vanilla, Musk">
+              <p class="text-[10px] text-[#9aa39b] mt-2">Separate with commas.</p>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label class="lbl">Tags / Keywords</label>
+            <input type="text" id="f-tags" class="inp" placeholder="Amber Gourmand, Romantic, Coffee-Scented">
+            <p class="text-[10px] text-[#9aa39b] mt-2">Separate tags with commas.</p>
+          </div>
+
+          <!-- IMAGE PREVIEW -->
+          <div id="img-preview-wrap" class="hidden mb-6 rounded-2xl bg-[#f4f6f0] p-4">
+            <p class="lbl mb-3">Image Preview</p>
+            <img id="img-preview" src="" alt="Perfume preview" class="preview-image">
+            <p id="img-preview-error" class="hidden text-xs text-red-500 mt-2">Image could not be loaded. Please check the link.</p>
+          </div>
+
+          <div class="form-actions flex flex-wrap gap-3 pt-5 border-t border-[#e8ece5]">
+            <button type="submit" class="btn-primary px-6 py-3">
+              <i class="fas fa-floppy-disk"></i>
+              <span id="save-btn-lbl">Save Perfume</span>
+            </button>
+            <button type="button" onclick="cancelForm()" class="btn-secondary px-6 py-3">
+              <i class="fas fa-xmark"></i> Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+
+    <!-- INVENTORY TABLE -->
+    <section class="glass overflow-hidden fade-in">
+      <div class="p-5 sm:p-6 border-b border-[#e9ede6]">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="font-serif text-xl font-semibold text-[#315d4b]">All Fragrances</h3>
+            <p class="text-[10px] text-[#89958c] mt-1">Your saved perfume products</p>
+          </div>
+
+          <div id="inventory-tools" class="flex items-center gap-3">
+            <div class="relative flex-1">
+              <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-[#9aa39b] text-xs"></i>
+              <input type="search" id="search-inp" class="inp !pl-9 !min-h-[40px] !py-2 sm:!w-64" placeholder="Search perfumes..." oninput="filterInventory(this.value)">
+            </div>
+            <span id="inv-count" class="pill whitespace-nowrap">0 items</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESKTOP TABLE -->
+      <div class="hidden sm:block overflow-x-auto">
+        <table class="w-full min-w-[760px]">
+          <thead>
+            <tr>
+              <th class="text-left p-4">Fragrance</th>
+              <th class="text-left p-4">Price</th>
+              <th class="text-left p-4">Type / Gender</th>
+              <th class="text-left p-4">Key Notes</th>
+              <th class="text-right p-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inv-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- MOBILE INVENTORY -->
+      <div class="sm:hidden" id="inv-mobile"></div>
+
+      <!-- EMPTY STATE -->
+      <div id="inv-empty" class="hidden text-center py-16 px-5">
+        <div class="empty-icon"><i class="fas fa-wine-bottle"></i></div>
+        <h3 class="font-serif text-lg text-[#315d4b]">No perfumes found</h3>
+        <p class="text-xs text-[#89958c] mt-2">Add your first perfume or change your search.</p>
+        <button onclick="toggleForm(true)" class="btn-primary mt-5">
+          <i class="fas fa-plus"></i> Add Perfume
+        </button>
+      </div>
+    </section>
+
+
+    <!-- MOBILE BACKUP ACTIONS -->
+    <div class="sm:hidden grid grid-cols-2 gap-3 mt-5">
+      <button onclick="exportData()" class="btn-secondary">
+        <i class="fas fa-download"></i> Export Backup
+      </button>
+      <label class="btn-secondary cursor-pointer">
+        <i class="fas fa-upload"></i> Import Backup
+        <input type="file" accept=".json,application/json" class="hidden" onchange="importData(event)">
+      </label>
+    </div>
+
+    <footer class="text-center pt-9 pb-5">
+      <div class="gold-line max-w-xs mx-auto mb-4"></div>
+      <p class="font-serif text-sm tracking-[.2em] text-[#315d4b]">KHATTAK PERFUMES</p>
+      <p class="text-[9px] text-[#9aa39b] mt-2 tracking-widest">ADMINISTRATOR WORKSPACE · © 2026</p>
+    </footer>
+  </main>
+
+
+  <!-- MOBILE NAVIGATION -->
+  <nav class="mobile-nav">
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
+      <i class="fas fa-house"></i><span>Home</span>
+    </a>
+    <button onclick="toggleForm(true)">
+      <i class="fas fa-plus-circle"></i><span>Add Perfume</span>
+    </button>
+    <button onclick="document.getElementById('search-inp').focus();window.scrollTo({top:document.getElementById('search-inp').getBoundingClientRect().top+window.scrollY-100,behavior:'smooth'})">
+      <i class="fas fa-search"></i><span>Search</span>
+    </button>
+    <button onclick="exportData()">
+      <i class="fas fa-download"></i><span>Backup</span>
+    </button>
+  </nav>
+</div>
+
+
+<!-- QR MODAL -->
+<div id="qr-modal" class="fixed inset-0 z-[100] hidden items-center justify-center overflow-y-auto p-4 sm:p-5" role="dialog" aria-modal="true" aria-labelledby="qr-title">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeQR()"></div>
+  <div class="relative z-10 my-auto w-full max-w-md glass p-5 text-center pop-in sm:p-7">
+    <button onclick="closeQR()" aria-label="Close sticker preview" class="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#f1f3ed] text-[#8b968d] hover:text-red-500">
+      <i class="fas fa-xmark"></i>
+    </button>
+
+    <p class="mb-1 text-[9px] font-bold uppercase tracking-[.3em] text-[#9a795e]">Bottle label preview</p>
+    <h3 class="mb-5 font-serif text-xl font-semibold text-[#315d4b]" id="qr-title">QR Sticker</h3>
+
+    <div class="flex justify-center py-2">
+      <!-- Luxury Perfume Bottle Label Sticker Container -->
+      <div id="qr-sticker-card" class="relative flex flex-col items-center justify-between text-center w-[240px] min-h-[330px] p-3.5 bg-[#0b0b0b] border-[1.5px] border-[#D4AF37] rounded-2xl shadow-[0_0_30px_rgba(212,175,55,0.15)] select-none">
+        
+        <!-- Elegant Inner Hairline Border -->
+        <div class="w-full h-full flex flex-col items-center justify-between p-3 border border-[#D4AF37]/35 rounded-xl bg-gradient-to-b from-[#141414] via-[#0b0b0b] to-[#060606]">
+          
+          <!-- Top Header -->
+          <div class="flex flex-col items-center w-full pt-1">
+            <span class="text-[7.5px] uppercase tracking-[0.3em] text-[#D4AF37]/75 font-semibold mb-1 font-sans">Haute Parfumerie</span>
+            <h4 class="font-serif text-sm sm:text-[15px] font-bold uppercase tracking-[0.35em] text-[#D4AF37] leading-none">KHATTAK</h4>
+            <div class="w-16 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-2 opacity-85"></div>
+          </div>
+
+          <!-- QR Code Box (Crisp white padding for high scannability) -->
+          <div class="my-2 flex items-center justify-center">
+            <div id="sticker-qr" aria-label="QR code linking to this perfume"></div>
+          </div>
+
+          <!-- Bottom Label -->
+          <div class="flex flex-col items-center w-full pb-1">
+            <div class="w-12 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-1.5"></div>
+            <p id="sticker-name" class="font-serif text-[15px] font-semibold text-[#f5eedc] max-w-full break-words leading-tight px-1"></p>
+            <p class="text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-medium mt-1">Scan to Explore</p>
+            <div class="mt-2 pt-1 border-t border-[#D4AF37]/20 w-4/5 flex justify-between items-center text-[7px] tracking-[0.2em] text-[#D4AF37]/60 uppercase font-sans">
+              <span>50ml</span>
+              <span>·</span>
+              <span>Musa Khattak</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p id="qr-url-label" class="mx-auto mt-4 max-w-sm break-all px-2 text-[10px] leading-relaxed text-[#89958c]"></p>
+
+    <div class="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
+      <button onclick="downloadSticker()" class="btn-primary w-full sm:flex-1">
+        <i class="fas fa-download"></i> Download Sticker PNG
+      </button>
+      <button onclick="copyQRUrl()" class="btn-secondary w-full sm:flex-1" id="copy-btn">
+        <i class="fas fa-copy"></i> Copy URL
+      </button>
+    </div>
+    <p class="mt-4 text-[9px] text-[#a0aaa2]">High-resolution artwork, ready to print as a bottle sticker.</p>
+  </div>
+</div>
+
+
+<!-- DELETE MODAL -->
+<div id="del-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-5">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeDelModal()"></div>
+  <div class="relative z-10 w-full max-w-sm glass p-7 text-center pop-in">
+    <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center">
+      <i class="fas fa-trash-can text-xl text-red-500"></i>
+    </div>
+    <h3 class="font-serif text-xl text-[#315d4b] font-semibold">Delete Perfume?</h3>
+    <p id="del-name-label" class="text-xs text-[#89958c] mt-2 mb-6">This action cannot be undone.</p>
+    <div class="flex gap-3">
+      <button onclick="confirmDelete()" class="flex-1 rounded-xl bg-red-600 hover:bg-red-700 text-white py-3 text-xs font-bold">
+        <i class="fas fa-trash mr-1"></i> Delete
+      </button>
+      <button onclick="closeDelModal()" class="btn-secondary flex-1">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- TOAST -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[300] hidden">
+  <div id="toast-body" class="px-5 py-3 rounded-xl text-sm font-semibold flex items-center gap-2 shadow-2xl"></div>
+</div>
+
+
+<script>
+/* =========================================================
+   KHATTAK PERFUMES ADMIN
+   Public catalogue compatibility:
+   localStorage key = khattak_perfumes
+   Settings key = khattak_settings
+========================================================= */
+
+const SK = 'khattak_perfumes';
+const SET = 'khattak_settings';
+const PWD = 'Khattak2025';
+
+let formVisible = false;
+let editMode = false;
+let pendingDelId = null;
+let activeQRUrl = '';
+let currentFilter = '';
+let toastTimer = null;
+let imageReadPromise = Promise.resolve(null);
+let imageReadToken = 0;
+
+const SEED = [{
+  id:'22-december-50ml',
+  name:'22 December',
+  size:'50ml',
+  price:'Rs. 5,500',
+  gender:'Men',
+  description:'22 December is an amber spicy gourmand fragrance for men. Combining Nutmeg and Apple in the top with creamy Vanilla and Coffee in the base, this fragrance is perfect for romantic evenings and cozy gatherings.',
+  concentration:'20% Eau De Parfum',
+  sillage:'Strong',
+  longevity:'48 Hours',
+  topNotes:['Apple','Nutmeg','Cassis'],
+  middleNotes:['Jasmine','Sandalwood'],
+  baseNotes:['Coffee','Vanilla','Musk'],
+  tags:['Amber Gourmand','Coffee-Scented','Romantic','For Men'],
+  imageUrl:'',
+  createdAt:new Date().toISOString()
+}];
+
+
+/* ---------- SECURITY / TEXT HELPERS ---------- */
+
+function escapeHTML(value=''){
+  return String(value).replace(/[&<>"']/g,char=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[char]));
+}
+
+function safeImage(value){
+  const url=String(value||'').trim();
+  if(!url)return '';
+  try{
+    const parsed=new URL(url,window.location.href);
+    if(['http:','https:','data:'].includes(parsed.protocol))return url;
+  }catch(e){}
+  return '';
+}
+
+function safeId(value){
+  return String(value||'').replace(/[^a-zA-Z0-9_-]/g,'');
+}
+
+function csv(str){
+  return String(str||'').split(',').map(s=>s.trim()).filter(Boolean);
+}
+
+function arr(value){
+  return Array.isArray(value)?value:(value?csv(String(value)):[]);
+}
+
+function debounce(fn,ms){
+  let timer;
+  return (...args)=>{
+    clearTimeout(timer);
+    timer=setTimeout(()=>fn(...args),ms);
+  };
+}
+
+
+/* ---------- DEFAULT IMAGE ---------- */
+
+function thumb(name='KHATTAK'){
+  const initials=String(name).trim().split(/\s+/)
+    .map(word=>word[0]||'')
+    .join('').slice(0,2).toUpperCase()||'KP';
+
+  const svg=`
+    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="150" viewBox="0 0 120 150">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f2f5ef"/>
+          <stop offset="1" stop-color="#e3ebe1"/>
+        </linearGradient>
+      </defs>
+      <rect width="120" height="150" rx="12" fill="url(#bg)"/>
+      <circle cx="60" cy="58" r="32" fill="none" stroke="#c79b73" stroke-width="1" opacity=".55"/>
+      <text x="60" y="68" text-anchor="middle" font-family="Georgia,serif" font-size="27" font-weight="bold" fill="#315d4b">${initials}</text>
+      <path d="M30 112H90" stroke="#c79b73" opacity=".6"/>
+      <text x="60" y="128" text-anchor="middle" font-family="Georgia,serif" font-size="8" letter-spacing="3" fill="#8b674b">KHATTAK</text>
+    </svg>`;
+
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+
+
+/* ---------- STORAGE ---------- */
+
+function load(){
+  try{
+    const raw=localStorage.getItem(SK);
+    if(!raw){
+      localStorage.setItem(SK,JSON.stringify(SEED));
+      return [...SEED];
+    }
+    const data=JSON.parse(raw);
+    return Array.isArray(data)?data:[...SEED];
+  }catch(error){
+    console.error('Could not read perfume storage:',error);
+    return [...SEED];
+  }
+}
+
+function save(data){
+  try{
+    localStorage.setItem(SK,JSON.stringify(data));
+    return true;
+  }catch(error){
+    console.error('Could not save perfume data:',error);
+    toast('Could not save data. Browser storage may be full.','error');
+    return false;
+  }
+}
+
+function loadSettings(){
+  try{
+    return JSON.parse(localStorage.getItem(SET))||{};
+  }catch(error){
+    return {};
+  }
+}
+
+function saveSettingsObj(settings){
+  try{
+    localStorage.setItem(SET,JSON.stringify(settings));
+    return true;
+  }catch(error){
+    toast('Could not save settings.','error');
+    return false;
+  }
+}
+
+function getBaseUrl(){
+  const settings=loadSettings();
+
+  if(settings.baseUrl){
+    return settings.baseUrl.replace(/\/+$/,'');
+  }
+
+  return window.location.href
+    .replace(/\/admin\.html[\s\S]*$/,'')
+    .replace(/\/$/,'');
+}
+
+function perfumeUrl(id){
+  return `${getBaseUrl()}/index.html?id=${encodeURIComponent(id)}`;
+}
+
+function mkId(name){
+  const slug=String(name).toLowerCase()
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-|-$/g,'')||'perfume';
+
+  return slug+'-'+Date.now().toString(36);
+}
+
+
+/* ---------- LOGIN ---------- */
+
+function doLogin(){
+  const input=document.getElementById('admin-pwd');
+  const error=document.getElementById('login-err');
+
+  if(input.value===PWD){
+    error.classList.add('hidden');
+    document.getElementById('login-overlay').style.display='none';
+    document.getElementById('admin-app').classList.remove('hidden');
+    sessionStorage.setItem('khattak_admin_session','active');
+    initAdmin();
+  }else{
+    error.classList.remove('hidden');
+    input.value='';
+    input.focus();
+    setTimeout(()=>error.classList.add('hidden'),3500);
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem('khattak_admin_session');
+  document.getElementById('admin-app').classList.add('hidden');
+  document.getElementById('login-overlay').style.display='flex';
+  document.getElementById('admin-pwd').value='';
+  resetForm();
+  toggleForm(false);
+}
+
+function togglePwdVis(){
+  const input=document.getElementById('admin-pwd');
+  const icon=document.querySelector('#eye-btn i');
+
+  if(input.type==='password'){
+    input.type='text';
+    icon.className='fas fa-eye-slash';
+  }else{
+    input.type='password';
+    icon.className='fas fa-eye';
+  }
+}
+
+
+/* ---------- INITIALIZATION ---------- */
+
+function initAdmin(){
+  const settings=loadSettings();
+  document.getElementById('base-url-inp').value=settings.baseUrl||'';
+  refreshAll();
+}
+
+function refreshAll(){
+  renderInv();
+  updateStats();
+}
+
+function updateStats(){
+  document.getElementById('stat-total').textContent=load().length;
+}
+
+
+/* ---------- BASE URL ---------- */
+
+function saveBaseUrl(){
+  const input=document.getElementById('base-url-inp');
+  const value=input.value.trim();
+
+  if(value){
+    try{
+      const url=new URL(value);
+      if(!['http:','https:'].includes(url.protocol))throw new Error();
+    }catch(error){
+      toast('Please enter a valid website URL.','error');
+      input.focus();
+      return;
+    }
+  }
+
+  const settings=loadSettings();
+  settings.baseUrl=value.replace(/\/+$/,'');
+  if(saveSettingsObj(settings))toast('Website URL saved successfully.','success');
+}
+
+
+/* ---------- SEARCH ---------- */
+
+function filterInventory(query){
+  currentFilter=String(query||'').toLowerCase().trim();
+  renderInv();
+}
+
+
+/* ---------- INVENTORY RENDER ---------- */
+
+function renderInv(){
+  let products=load();
+
+  if(currentFilter){
+    products=products.filter(product=>{
+      const text=[
+        product.name,
+        product.price,
+        product.gender,
+        product.size,
+        product.concentration,
+        ...arr(product.tags),
+        ...arr(product.topNotes),
+        ...arr(product.middleNotes),
+        ...arr(product.baseNotes)
+      ].join(' ').toLowerCase();
+
+      return text.includes(currentFilter);
+    });
+  }
+
+  const tbody=document.getElementById('inv-tbody');
+  const mobile=document.getElementById('inv-mobile');
+  const empty=document.getElementById('inv-empty');
+  const count=document.getElementById('inv-count');
+
+  count.textContent=`${products.length} item${products.length===1?'':'s'}`;
+
+  if(!products.length){
+    tbody.innerHTML='';
+    mobile.innerHTML='';
+    empty.classList.remove('hidden');
+    return;
+  }
+
+  empty.classList.add('hidden');
+
+  tbody.innerHTML=products.map(product=>{
+    const id=safeId(product.id);
+    const name=escapeHTML(product.name||'Untitled Perfume');
+    const price=escapeHTML(product.price||'—');
+    const size=escapeHTML(product.size||'—');
+    const concentration=escapeHTML(product.concentration||'—');
+    const gender=escapeHTML(product.gender||'—');
+    const sillage=escapeHTML(product.sillage||'—');
+    const image=safeImage(product.imageData)||safeImage(product.imageUrl)||thumb(product.name);
+    const notes=[
+      ...arr(product.topNotes).slice(0,1),
+      ...arr(product.middleNotes).slice(0,1),
+      ...arr(product.baseNotes).slice(0,1)
+    ];
+    const date=product.createdAt
+      ?new Date(product.createdAt).toLocaleDateString('en-PK',{day:'2-digit',month:'short',year:'numeric'})
+      :'—';
+
+    return `
+      <tr class="inv-row">
+        <td class="p-4">
+          <div class="flex items-center gap-3">
+            <img src="${image}" alt="${name}" class="w-11 h-14 object-cover rounded-xl border border-[#e5e9e1]" onerror="this.onerror=null;this.src='${thumb(product.name)}'">
+            <div>
+              <p class="text-sm font-bold text-[#315d4b]">${name}</p>
+              <p class="text-[10px] text-[#99a198] mt-1">${size} · ${date}</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 text-sm font-bold text-[#a56e48]">${price}</td>
+        <td class="p-4">
+          <p class="text-xs font-semibold text-[#52645a]">${concentration}</p>
+          <p class="text-[10px] text-[#99a198] mt-1">${gender} · ${sillage}</p>
+        </td>
+        <td class="p-4">
+          <div class="flex flex-wrap gap-1">${notes.map(note=>`<span class="pill">${escapeHTML(note)}</span>`).join('')}</div>
+        </td>
+        <td class="p-4">
+          <div class="flex items-center justify-end gap-2">
+            <button onclick="openQR('${id}')" class="btn-small"><i class="fas fa-qrcode"></i> QR Sticker</button>
+            <button onclick="startEdit('${id}')" class="btn-small"><i class="fas fa-pen"></i> Edit</button>
+            <button onclick="askDelete('${id}')" class="btn-danger" aria-label="Delete"><i class="fas fa-trash"></i></button>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+
+
+  mobile.innerHTML=products.map(product=>{
+    const id=safeId(product.id);
+    const name=escapeHTML(product.name||'Untitled Perfume');
+    const price=escapeHTML(product.price||'—');
+    const image=safeImage(product.imageData)||safeImage(product.imageUrl)||thumb(product.name);
+    const size=escapeHTML(product.size||'—');
+    const concentration=escapeHTML(product.concentration||'—');
+    const gender=escapeHTML(product.gender||'—');
+
+    return `
+      <div class="inv-row p-4">
+        <div class="flex gap-3 mb-4">
+          <img src="${image}" alt="${name}" class="w-16 h-[78px] object-cover rounded-xl border border-[#e5e9e1]" onerror="this.onerror=null;this.src='${thumb(product.name)}'">
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-[#315d4b] break-words">${name}</p>
+            <p class="text-[10px] text-[#89958c] mt-1">${size} · ${concentration}</p>
+            <p class="text-sm font-bold text-[#a56e48] mt-2">${price}</p>
+            <span class="pill mt-2">${gender}</span>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="openQR('${id}')" class="btn-small"><i class="fas fa-qrcode"></i> QR Sticker</button>
+          <button onclick="startEdit('${id}')" class="btn-small"><i class="fas fa-pen"></i> Edit</button>
+          <button onclick="askDelete('${id}')" class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+
+/* ---------- FORM OPEN / CLOSE ---------- */
+
+function toggleForm(forceState){
+  const panel=document.getElementById('form-panel');
+  const icon=document.getElementById('form-toggle-icon');
+  const label=document.getElementById('form-toggle-txt');
+
+  formVisible=forceState!==undefined?forceState:!formVisible;
+
+  if(formVisible){
+    panel.classList.add('open');
+    icon.className='fas fa-xmark text-xs';
+    label.textContent='Close Form';
+
+    setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),100);
+  }else{
+    panel.classList.remove('open');
+    icon.className='fas fa-plus text-xs';
+    label.textContent='Add New Perfume';
+
+    if(!editMode)resetForm();
+  }
+}
+
+function resetForm(){
+  imageReadToken++;
+  imageReadPromise=Promise.resolve(null);
+  document.getElementById('perf-form').reset();
+  document.getElementById('f-id').value='';
+  document.getElementById('form-heading').textContent='Add New Perfume';
+  document.getElementById('save-btn-lbl').textContent='Save Perfume';
+  document.getElementById('img-preview-wrap').classList.add('hidden');
+  document.getElementById('img-preview-error').classList.add('hidden');
+  document.getElementById('image-upload-status').textContent='JPG, PNG or WebP · up to 2 MB';
+  document.getElementById('clear-uploaded-image').classList.add('hidden');
+  editMode=false;
+}
+
+function cancelForm(){
+  resetForm();
+  toggleForm(false);
+}
+
+
+/* ---------- IMAGE PREVIEW ---------- */
+
+const imageInput=document.getElementById('f-img');
+const imageFileInput=document.getElementById('f-image-file');
+
+function showImagePreview(source){
+  const wrap=document.getElementById('img-preview-wrap');
+  const preview=document.getElementById('img-preview');
+  const error=document.getElementById('img-preview-error');
+
+  error.classList.add('hidden');
+
+  if(!source){
+    wrap.classList.add('hidden');
+    preview.removeAttribute('src');
+    return;
+  }
+
+  wrap.classList.remove('hidden');
+  preview.src=source;
+}
+
+imageFileInput.addEventListener('change',event=>{
+  const file=event.target.files?.[0];
+  if(!file)return;
+
+  if(!file.type.startsWith('image/')){
+    toast('Please select a valid image file.','error');
+    event.target.value='';
+    return;
+  }
+
+  if(file.size>2*1024*1024){
+    toast('Please choose an image smaller than 2 MB.','error');
+    event.target.value='';
+    return;
+  }
+
+  const token=++imageReadToken;
+  const reader=new FileReader();
+  document.getElementById('image-upload-status').textContent='Reading image…';
+  imageReadPromise=new Promise(resolve=>{
+    reader.onload=()=>{
+      const data=typeof reader.result==='string'?reader.result:'';
+      if(token===imageReadToken && data){
+        document.getElementById('f-image-data').value=data;
+        document.getElementById('image-upload-status').textContent=`${file.name} · ready to save`;
+        document.getElementById('clear-uploaded-image').classList.remove('hidden');
+        showImagePreview(data);
+      }
+      resolve(data||null);
+    };
+
+    reader.onerror=()=>{
+      if(token===imageReadToken){
+        document.getElementById('image-upload-status').textContent='Could not read the image. Try another file.';
+        toast('Could not read this image file. Please try again.','error');
+      }
+      resolve(null);
+    };
+  });
+  reader.readAsDataURL(file);
+});
+
+imageInput.addEventListener('input',debounce(()=>{
+  const url=imageInput.value.trim();
+  const uploaded=document.getElementById('f-image-data').value;
+  showImagePreview(uploaded||url);
+},400));
+
+function clearUploadedImage(){
+  imageReadToken++;
+  imageReadPromise=Promise.resolve(null);
+  document.getElementById('f-image-data').value='';
+  imageFileInput.value='';
+  document.getElementById('image-upload-status').textContent='JPG, PNG or WebP · up to 2 MB';
+  document.getElementById('clear-uploaded-image').classList.add('hidden');
+  showImagePreview(imageInput.value.trim());
+}
+
+document.getElementById('img-preview').addEventListener('error',()=>{
+  document.getElementById('img-preview-error').classList.remove('hidden');
+});
+
+document.getElementById('img-preview').addEventListener('load',()=>{
+  document.getElementById('img-preview-error').classList.add('hidden');
+});
+
+
+/* ---------- SAVE PERFUME ---------- */
+
+async function savePerfume(event){
+  event.preventDefault();
+
+  const name=document.getElementById('f-name').value.trim();
+
+  if(!name){
+    toast('Perfume name is required.','error');
+    document.getElementById('f-name').focus();
+    return;
+  }
+
+  const selectedFile=imageFileInput.files?.[0];
+  if(selectedFile){
+    const imageData=await imageReadPromise;
+    if(!imageData){
+      toast('Wait for the selected image to finish loading, then try again.','error');
+      return;
+    }
+  }
+
+  const products=load();
+  const editId=document.getElementById('f-id').value;
+  const imageUrl=document.getElementById('f-img').value.trim();
+
+  if(imageUrl && !safeImage(imageUrl)){
+    toast('Please enter a valid image URL.','error');
+    return;
+  }
+
+  const oldProduct=editId?products.find(p=>p.id===editId):null;
+
+  const perfume={
+    id:editId||mkId(name),
+    name,
+    size:document.getElementById('f-size').value.trim(),
+    price:document.getElementById('f-price').value.trim(),
+    gender:document.getElementById('f-gender').value,
+    description:document.getElementById('f-desc').value.trim(),
+    concentration:document.getElementById('f-conc').value.trim(),
+    sillage:document.getElementById('f-sillage').value,
+    longevity:document.getElementById('f-long').value.trim(),
+    imageData:document.getElementById('f-image-data').value,
+    imageUrl,
+    topNotes:csv(document.getElementById('f-top').value),
+    middleNotes:csv(document.getElementById('f-mid').value),
+    baseNotes:csv(document.getElementById('f-base').value),
+    tags:csv(document.getElementById('f-tags').value),
+    createdAt:oldProduct?.createdAt||new Date().toISOString(),
+    updatedAt:new Date().toISOString()
+  };
+
+  if(editId){
+    const index=products.findIndex(p=>p.id===editId);
+    if(index!==-1)products[index]=perfume;
+    else products.push(perfume);
+  }else{
+    products.push(perfume);
+  }
+
+  if(!save(products))return;
+
+  refreshAll();
+  resetForm();
+  toggleForm(false);
+
+  toast(editId?`"${name}" updated successfully.`:`"${name}" added successfully.`,'success');
+}
+
+
+/* ---------- EDIT PERFUME ---------- */
+
+function startEdit(id){
+  const product=load().find(p=>p.id===id);
+  if(!product)return;
+
+  editMode=true;
+
+  document.getElementById('f-id').value=product.id||'';
+  document.getElementById('f-name').value=product.name||'';
+  document.getElementById('f-size').value=product.size||'';
+  document.getElementById('f-price').value=product.price||'';
+  document.getElementById('f-gender').value=product.gender||'';
+  document.getElementById('f-desc').value=product.description||'';
+  document.getElementById('f-conc').value=product.concentration||'';
+  document.getElementById('f-sillage').value=product.sillage||'';
+  document.getElementById('f-long').value=product.longevity||'';
+  document.getElementById('f-img').value=product.imageUrl||'';
+  document.getElementById('f-image-data').value=product.imageData||'';
+  imageFileInput.value='';
+  document.getElementById('image-upload-status').textContent=product.imageData
+    ?'Saved device image · choose another to replace'
+    :'JPG, PNG or WebP · up to 2 MB';
+  document.getElementById('clear-uploaded-image').classList.toggle('hidden',!product.imageData);
+  document.getElementById('f-top').value=arr(product.topNotes).join(', ');
+  document.getElementById('f-mid').value=arr(product.middleNotes).join(', ');
+  document.getElementById('f-base').value=arr(product.baseNotes).join(', ');
+  document.getElementById('f-tags').value=arr(product.tags).join(', ');
+
+  showImagePreview(product.imageData||product.imageUrl||'');
+
+  document.getElementById('form-heading').textContent='Edit: '+product.name;
+  document.getElementById('save-btn-lbl').textContent='Update Perfume';
+
+  toggleForm(true);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+/* ---------- DELETE PERFUME ---------- */
+
+function askDelete(id){
+  const product=load().find(p=>p.id===id);
+  if(!product)return;
+
+  pendingDelId=id;
+  document.getElementById('del-name-label').textContent=`"${product.name}" will be permanently removed.`;
+  showModal('del-modal');
+}
+
+function closeDelModal(){
+  hideModal('del-modal');
+  pendingDelId=null;
+}
+
+function confirmDelete(){
+  if(!pendingDelId)return;
+
+  const products=load().filter(p=>p.id!==pendingDelId);
+  if(!save(products))return;
+
+  closeDelModal();
+  refreshAll();
+  toast('Perfume deleted successfully.','info');
+}
+
+
+/* ---------- MODAL HELPERS ---------- */
+
+function showModal(id){
+  const modal=document.getElementById(id);
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function hideModal(id){
+  const modal=document.getElementById(id);
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+
+/* ---------- QR CODE ---------- */
+
+function openQR(id){
+  const product=load().find(p=>p.id===id);
+  if(!product)return;
+
+  if(typeof QRCode==='undefined'){
+    toast('QR library did not load. Please check your internet connection.','error');
+    return;
+  }
+
+  const url=perfumeUrl(id);
+  activeQRUrl=url;
+
+  document.getElementById('qr-title').textContent=product.name;
+  document.getElementById('sticker-name').textContent=product.name||'Untitled Perfume';
+  document.getElementById('qr-url-label').textContent=url;
+
+  const wrap=document.getElementById('sticker-qr');
+  wrap.innerHTML='';
+
+  try{
+    new QRCode(wrap,{
+      text:url,
+      width:120,
+      height:120,
+      colorDark:'#000000',
+      colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.H
+    });
+  }catch(error){
+    console.error(error);
+    toast('QR generation failed. Check your website URL.','error');
+    return;
+  }
+
+  document.getElementById('copy-btn').innerHTML='<i class="fas fa-copy"></i> Copy URL';
+  showModal('qr-modal');
+}
+
+function closeQR(){
+  hideModal('qr-modal');
+}
+
+
+/* ---------- DOWNLOAD STICKER ---------- */
+
+async function downloadSticker(){
+  if(typeof html2canvas==='undefined'){
+    toast('Sticker export library did not load. Check your internet connection.','error');
+    return;
+  }
+
+  if(!document.querySelector('#sticker-qr canvas,#sticker-qr img')){
+    toast('QR code is not ready yet.','error');
+    return;
+  }
+
+  try{
+    await document.fonts.ready;
+    const card = document.getElementById('qr-sticker-card') || document.getElementById('sticker-card');
+    if(!card){
+      toast('Sticker container not found.','error');
+      return;
+    }
+
+    const canvas = await html2canvas(card,{
+      backgroundColor: null,
+      scale: 3,
+      useCORS: true,
+      logging: false
+    });
+
+    const link=document.createElement('a');
+    const name=document.getElementById('sticker-name').textContent
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g,'-')
+      .replace(/^-|-$/g,'')||'perfume';
+    link.href=canvas.toDataURL('image/png');
+    link.download=`khattak-${name}-sticker.png`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    toast('Sticker PNG downloaded and ready to print.','success');
+  }catch(error){
+    console.error('Could not render perfume sticker:',error);
+    toast('Could not export sticker. Please try again.','error');
+  }
+}
+
+
+/* ---------- COPY QR URL ---------- */
+
+async function copyQRUrl(){
+  if(!activeQRUrl)return;
+
+  const button=document.getElementById('copy-btn');
+
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(activeQRUrl);
+    }else{
+      const area=document.createElement('textarea');
+      area.value=activeQRUrl;
+      area.style.position='fixed';
+      area.style.opacity='0';
+      document.body.appendChild(area);
+      area.select();
+
+      const copied=document.execCommand('copy');
+      area.remove();
+
+      if(!copied)throw new Error('Copy failed');
+    }
+
+    button.innerHTML='<i class="fas fa-check"></i> Copied!';
+    toast('Product URL copied.','success');
+
+    setTimeout(()=>{
+      button.innerHTML='<i class="fas fa-copy"></i> Copy URL';
+    },2200);
+  }catch(error){
+    toast('Could not copy URL. Please copy it manually.','error');
+  }
+}
+
+
+/* ---------- EXPORT BACKUP ---------- */
+
+function exportData(){
+  const data={
+    perfumes:load(),
+    settings:loadSettings(),
+    exportedAt:new Date().toISOString(),
+    application:'Khattak Perfumes'
+  };
+
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+
+  link.href=url;
+  link.download=`khattak-backup-${new Date().toISOString().slice(0,10)}.json`;
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+  toast('Backup exported successfully.','success');
+}
+
+
+/* ---------- IMPORT BACKUP ---------- */
+
+function importData(event){
+  const file=event.target.files?.[0];
+  if(!file)return;
+
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+
+      if(!data || !Array.isArray(data.perfumes)){
+        throw new Error('Invalid backup structure');
+      }
+
+      const validProducts=data.perfumes.every(product=>
+        product && typeof product==='object' &&
+        typeof product.id==='string' &&
+        typeof product.name==='string'
+      );
+
+      if(!validProducts){
+        throw new Error('Invalid perfume data');
+      }
+
+      if(!confirm(`Import ${data.perfumes.length} perfume(s)? Current inventory will be replaced.`)){
+        event.target.value='';
+        return;
+      }
+
+      if(!save(data.perfumes))return;
+
+      if(data.settings && typeof data.settings==='object'){
+        saveSettingsObj(data.settings);
+      }
+
+      document.getElementById('base-url-inp').value=loadSettings().baseUrl||'';
+      refreshAll();
+
+      toast(`${data.perfumes.length} perfume(s) imported.`,'success');
+    }catch(error){
+      console.error(error);
+      toast('Invalid backup file. Nothing was imported.','error');
+    }
+
+    event.target.value='';
+  };
+
+  reader.onerror=()=>{
+    toast('Could not read backup file.','error');
+    event.target.value='';
+  };
+
+  reader.readAsText(file);
+}
+
+
+/* ---------- TOAST ---------- */
+
+function toast(message,type='success'){
+  const element=document.getElementById('toast');
+  const body=document.getElementById('toast-body');
+
+  const styles={
+    success:'bg-[#234b3c] text-white border border-[#315f4c]',
+    error:'bg-[#a83232] text-white border border-red-700',
+    info:'bg-[#8b674b] text-white border border-[#b98252]'
+  };
+
+  const icons={
+    success:'fa-circle-check',
+    error:'fa-circle-xmark',
+    info:'fa-circle-info'
+  };
+
+  body.className=`px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-2xl ${styles[type]||styles.info}`;
+  body.innerHTML=`<i class="fas ${icons[type]||icons.info}"></i><span>${escapeHTML(message)}</span>`;
+
+  element.classList.remove('hidden');
+
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>element.classList.add('hidden'),3200);
+}
+
+
+/* ---------- KEYBOARD SHORTCUTS ---------- */
+
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){
+    closeQR();
+    closeDelModal();
+  }
+});
+
+
+/* ---------- LIVE SYNC ---------- */
+
+// When the public catalogue or another admin tab updates the same storage,
+// refresh this inventory automatically.
+window.addEventListener('storage',event=>{
+  if(event.key===SK){
+    refreshAll();
+    toast('Inventory updated from another tab.','info');
+  }
+
+  if(event.key===SET){
+    document.getElementById('base-url-inp').value=loadSettings().baseUrl||'';
+  }
+});
+
+
+/* ---------- SESSION RESTORE ---------- */
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(sessionStorage.getItem('khattak_admin_session')==='active'){
+    document.getElementById('login-overlay').style.display='none';
+    document.getElementById('admin-app').classList.remove('hidden');
+    initAdmin();
+  }
+
+  document.getElementById('admin-pwd').addEventListener('keydown',event=>{
+    if(event.key==='Enter')doLogin();
+  });
+});
+</script>
+
+</body>
+</html>
